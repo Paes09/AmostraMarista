@@ -1,112 +1,176 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Minha Jornada</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
-    }
-    header {
-      background: linear-gradient(to right, #2ecc71, #3498db);
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
-    .container {
-      max-width: 1000px;
-      margin: 30px auto;
-      padding: 20px;
-      background: white;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      border-radius: 10px;
-    }
-    .cards {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 20px;
-    }
-    .card {
-      width: 30%;
-      padding: 20px;
-      background: #eafaf1;
-      border: 2px solid #2ecc71;
-      border-radius: 10px;
-      text-align: center;
-    }
-    .upload-section {
-      margin-top: 40px;
-      padding: 20px;
-      border: 2px dashed #3498db;
-      background-color: #ebf5fb;
-      text-align: center;
-      border-radius: 10px;
-    }
-    input[type="file"] {
-      margin-top: 10px;
-    }
-    button {
-      margin-top: 15px;
-      background-color: #f39c12;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #e67e22;
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Minha Jornada</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        header {
+            background: linear-gradient(to right, #2ecc71, #3498db);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+        .cards {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .card {
+            width: 30%;
+            padding: 20px;
+            background: #eafaf1;
+            border: 2px solid #2ecc71;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .upload-section {
+            margin-top: 40px;
+            padding: 20px;
+            border: 2px dashed #3498db;
+            background-color: #ebf5fb;
+            text-align: center;
+            border-radius: 10px;
+        }
+        input[type="file"] {
+            margin-top: 10px;
+        }
+        button {
+            margin-top: 15px;
+            background-color: #f39c12;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease; /* Adiciona transição para o hover */
+        }
+        button:hover {
+            background-color: #e67e22;
+        }
+        /* Estilos para o indicador de carregamento */
+        .loading-spinner {
+            display: none; /* Escondido por padrão */
+            margin-top: 15px;
+            font-size: 1.1em;
+            color: #3498db;
+        }
+        .loading-spinner::before {
+            content: 'Uploading... ';
+            display: inline-block;
+            animation: spin 1s linear infinite; /* Animação simples de rotação */
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* Estilos para a mensagem de upload */
+        #uploadMessage {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        #uploadMessage.success {
+            color: green;
+        }
+        #uploadMessage.error {
+            color: red;
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>Minha Jornada</h1>
-    <p>Treinos, Dieta e Avaliação</p>
-  </header>
+    <header>
+        <h1>Minha Jornada</h1>
+        <p>Treinos, Dieta e Avaliação</p>
+    </header>
 
-  <div class="container">
-    <h2>Área Pessoal</h2>
-    <div class="cards">
-      <div class="card" style="background:#2ecc71;color:white;">Treinos</div>
-      <div class="card" style="background:#3498db;color:white;">Dieta</div>
-      <div class="card" style="background:#f39c12;color:white;">Avaliação</div>
+    <div class="container">
+        <h2>Área Pessoal</h2>
+        <div class="cards">
+            <div class="card" style="background:#2ecc71;color:white;">Treinos</div>
+            <div class="card" style="background:#3498db;color:white;">Dieta</div>
+            <div class="card" style="background:#f39c12;color:white;">Avaliação</div>
+        </div>
+
+        <div class="upload-section">
+            <h2>Enviar Execução</h2>
+            <form id="uploadForm" enctype="multipart/form-data">
+                <input type="file" id="fileInput" name="video" accept="video/*" required><br>
+                <button type="submit">Enviar</button>
+            </form>
+            <p id="uploadMessage"></p>
+            <div id="loadingSpinner" class="loading-spinner">
+                <!-- O texto e o spinner serão adicionados via CSS no ::before -->
+            </div>
+            <p style="font-size: 0.9em; color: #777;">
+                *Atenção: O primeiro upload pode demorar alguns segundos devido à inicialização do servidor.
+            </p>
+        </div>
     </div>
 
-    <div class="upload-section">
-      <h2>Enviar Execução</h2>
-      <form id="uploadForm" enctype="multipart/form-data">
-        <input type="file" id="fileInput" name="video" accept="video/*" required><br>
-        <button type="submit">Enviar</button>
-      </form>
-      <p id="uploadMessage"></p>
-    </div>
-  </div>
+    <script>
+        const form = document.getElementById('uploadForm');
+        const msg = document.getElementById('uploadMessage');
+        const fileInput = document.getElementById('fileInput');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const submitButton = form.querySelector('button[type="submit"]'); // Pega o botão de submit
 
-  <script>
-    const form = document.getElementById('uploadForm');
-    const msg = document.getElementById('uploadMessage');
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault(); // Previne o envio padrão do formulário
 
-    form.addEventListener('submit', async function (e) {
-      e.preventDefault();
-      const file = document.getElementById('fileInput').files[0];
-      if (!file) return;
+            const file = fileInput.files[0];
+            if (!file) {
+                msg.innerText = 'Por favor, selecione um arquivo para enviar.';
+                msg.className = 'error'; // Adiciona classe 'error' para estilização
+                return;
+            }
 
-      const formData = new FormData();
-      formData.append('video', file);
+            // Limpa mensagens anteriores e mostra o indicador de carregamento
+            msg.innerText = '';
+            msg.className = '';
+            loadingSpinner.style.display = 'block'; // Mostra o spinner
+            submitButton.disabled = true; // Desabilita o botão para evitar múltiplos cliques
 
-      const res = await fetch('/upload', {
-        method: 'POST',
-        body: formData
-      });
+            const formData = new FormData();
+            formData.append('video', file);
 
-      const result = await res.text();
-      msg.innerText = result;
-      msg.style.color = 'green';
-    });
-  </script>
+            try {
+                const res = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await res.text(); // Assume que o servidor retorna texto
+                msg.innerText = result;
+
+                if (res.ok) { // Verifica se a resposta foi um sucesso HTTP (status 2xx)
+                    msg.className = 'success'; // Adiciona classe 'success'
+                    fileInput.value = ''; // Limpa o campo de arquivo após sucesso
+                } else {
+                    msg.className = 'error'; // Adiciona classe 'error'
+                }
+
+            } catch (error) {
+                console.error('Erro no upload:', error);
+                msg.innerText = 'Erro ao enviar o arquivo. Verifique sua conexão e tente novamente.';
+                msg.className = 'error';
+            } finally {
+                loadingSpinner.style.display = 'none'; // Esconde o spinner
+                submitButton.disabled = false; // Habilita o botão novamente
+            }
+        });
+    </script>
 </body>
 </html>
