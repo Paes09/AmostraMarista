@@ -240,7 +240,7 @@
                 });
 
                 const result = await res.text();
-                msg.innerText = result;
+                msg.innerHTML = result; // Use innerHTML para renderizar o link de sucesso
 
                 if (res.ok) {
                     msg.className = 'success';
@@ -255,4 +255,10 @@
                 msg.innerText = 'Erro ao enviar o arquivo. Verifique sua conexão e tente novamente.';
                 msg.className = 'error';
             } finally {
-                loadingSpinn
+                loadingSpinner.style.display = 'none';
+                submitButton.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
