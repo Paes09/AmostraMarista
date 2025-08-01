@@ -16,6 +16,27 @@
             padding: 20px;
             text-align: center;
         }
+        header img {
+            height: 60px;
+            display: block;
+            margin: 0 auto 10px auto;
+            border-radius: 8px;
+        }
+        nav {
+            background: #ddd;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+        nav a:hover {
+            color: #2ecc71;
+        }
         .container {
             max-width: 1000px;
             margin: 30px auto;
@@ -45,7 +66,7 @@
             text-align: center;
             border-radius: 10px;
         }
-        input[type="file"] {
+        input[type="file"], input[type="password"] {
             margin-top: 10px;
         }
         button {
@@ -56,28 +77,17 @@
             padding: 10px 20px;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s ease; /* Adiciona transição para o hover */
+            transition: background-color 0.3s ease;
         }
         button:hover {
             background-color: #e67e22;
         }
-        /* Estilos para o indicador de carregamento */
         .loading-spinner {
-            display: none; /* Escondido por padrão */
+            display: none;
             margin-top: 15px;
             font-size: 1.1em;
             color: #3498db;
         }
-        .loading-spinner::before {
-            content: 'Uploading... ';
-            display: inline-block;
-            animation: spin 1s linear infinite; /* Animação simples de rotação */
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        /* Estilos para a mensagem de upload */
         #uploadMessage {
             margin-top: 10px;
             font-weight: bold;
@@ -88,63 +98,140 @@
         #uploadMessage.error {
             color: red;
         }
+        section {
+            display: none;
+        }
+        section.active {
+            display: block;
+        }
+        ul {
+            padding-left: 20px;
+        }
     </style>
 </head>
 <body>
     <header>
+        <img src="logo.jpg" alt="Logo Minha Jornada">
         <h1>Minha Jornada</h1>
         <p>Treinos, Dieta e Avaliação</p>
     </header>
 
-    <div class="container">
-        <h2>Área Pessoal</h2>
-        <div class="cards">
-            <div class="card" style="background:#2ecc71;color:white;">Treinos</div>
-            <div class="card" style="background:#3498db;color:white;">Dieta</div>
-            <div class="card" style="background:#f39c12;color:white;">Avaliação</div>
-        </div>
+    <nav>
+        <a href="#" onclick="showSection('upload')">Enviar Execução</a>
+        <a href="#" onclick="showSection('exercicios')">Exercícios</a>
+        <a href="#" onclick="showSection('personais')">Personais</a>
+    </nav>
 
-        <div class="upload-section">
-            <h2>Enviar Execução</h2>
-            <form id="uploadForm" enctype="multipart/form-data">
-                <input type="file" id="fileInput" name="video" accept="video/*" required><br>
-                <button type="submit">Enviar</button>
-            </form>
-            <p id="uploadMessage"></p>
-            <div id="loadingSpinner" class="loading-spinner">
-                <!-- O texto e o spinner serão adicionados via CSS no ::before -->
+    <div class="container">
+        <!-- Seção de Upload -->
+        <section id="upload" class="active">
+            <h2>Área Pessoal</h2>
+            <div class="cards">
+                <div class="card" style="background:#2ecc71;color:white;">Treinos</div>
+                <div class="card" style="background:#3498db;color:white;">Dieta</div>
+                <div class="card" style="background:#f39c12;color:white;">Avaliação</div>
             </div>
-            <p style="font-size: 0.9em; color: #777;">
-                *Atenção: O primeiro upload pode demorar alguns segundos devido à inicialização do servidor.
-            </p>
-        </div>
+
+            <div class="upload-section">
+                <h2>Enviar Execução</h2>
+                <form id="uploadForm" enctype="multipart/form-data">
+                    <input type="password" id="senha" name="senha" placeholder="Digite a senha" required><br>
+                    <input type="file" id="fileInput" name="video" accept="video/*" required><br>
+                    <button type="submit">Enviar</button>
+                </form>
+                <p id="uploadMessage"></p>
+                <div id="loadingSpinner" class="loading-spinner"></div>
+                <p style="font-size: 0.9em; color: #777;">
+                    *Atenção: O primeiro upload pode demorar alguns segundos devido à inicialização do servidor.
+                </p>
+            </div>
+        </section>
+
+        <!-- Seção de Exercícios -->
+        <section id="exercicios">
+            <h2>Exercícios Disponíveis</h2>
+
+            <div style="margin-bottom: 20px;">
+                <h3>Zigue-zague entre os cones</h3>
+                <iframe width="250" height="140" src="https://www.youtube.com/embed/mpMuZdtQCJo"
+                    title="Zigue-zague entre cones" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <h3>Abdominal supra</h3>
+                <iframe width="250" height="140" src="https://www.youtube.com/embed/wwqs7q61nwM"
+                    title="Abdominal supra" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <h3>Agachamento</h3>
+                <iframe width="250" height="140" src="https://www.youtube.com/embed/F4IzWV8cg8g"
+                    title="Agachamento" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <h3>Dentro e fora lateral</h3>
+                <iframe width="250" height="140" src="https://www.youtube.com/embed/GuyBhHQRYKY"
+                    title="Dentro e fora lateral" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </section>
+
+        <!-- Seção de Personais -->
+        <section id="personais">
+            <h2>Personais</h2>
+            <p>Taxa: <strong>R$ 14,90</strong></p>
+            <h3>Sites Parceiros</h3>
+            <ul>
+                <li><a href="https://exemplo1.com" target="_blank">Parceiro 1</a></li>
+                <li><a href="https://exemplo2.com" target="_blank">Parceiro 2</a></li>
+                <li><a href="https://exemplo3.com" target="_blank">Parceiro 3</a></li>
+            </ul>
+        </section>
     </div>
 
     <script>
+        function showSection(id) {
+            document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
         const form = document.getElementById('uploadForm');
         const msg = document.getElementById('uploadMessage');
         const fileInput = document.getElementById('fileInput');
+        const senhaInput = document.getElementById('senha');
         const loadingSpinner = document.getElementById('loadingSpinner');
-        const submitButton = form.querySelector('button[type="submit"]'); // Pega o botão de submit
+        const submitButton = form.querySelector('button[type="submit"]');
 
         form.addEventListener('submit', async function (e) {
-            e.preventDefault(); // Previne o envio padrão do formulário
-
+            e.preventDefault();
             const file = fileInput.files[0];
+            const senha = senhaInput.value;
             if (!file) {
                 msg.innerText = 'Por favor, selecione um arquivo para enviar.';
-                msg.className = 'error'; // Adiciona classe 'error' para estilização
+                msg.className = 'error';
                 return;
             }
 
-            // Limpa mensagens anteriores e mostra o indicador de carregamento
             msg.innerText = '';
             msg.className = '';
-            loadingSpinner.style.display = 'block'; // Mostra o spinner
-            submitButton.disabled = true; // Desabilita o botão para evitar múltiplos cliques
+            loadingSpinner.style.display = 'block';
+            submitButton.disabled = true;
 
             const formData = new FormData();
             formData.append('video', file);
+            formData.append('senha', senha);
 
             try {
                 const res = await fetch('/upload', {
@@ -152,14 +239,15 @@
                     body: formData
                 });
 
-                const result = await res.text(); // Assume que o servidor retorna texto
+                const result = await res.text();
                 msg.innerText = result;
 
-                if (res.ok) { // Verifica se a resposta foi um sucesso HTTP (status 2xx)
-                    msg.className = 'success'; // Adiciona classe 'success'
-                    fileInput.value = ''; // Limpa o campo de arquivo após sucesso
+                if (res.ok) {
+                    msg.className = 'success';
+                    fileInput.value = '';
+                    senhaInput.value = '';
                 } else {
-                    msg.className = 'error'; // Adiciona classe 'error'
+                    msg.className = 'error';
                 }
 
             } catch (error) {
@@ -167,10 +255,4 @@
                 msg.innerText = 'Erro ao enviar o arquivo. Verifique sua conexão e tente novamente.';
                 msg.className = 'error';
             } finally {
-                loadingSpinner.style.display = 'none'; // Esconde o spinner
-                submitButton.disabled = false; // Habilita o botão novamente
-            }
-        });
-    </script>
-</body>
-</html>
+                loadingSpinn
